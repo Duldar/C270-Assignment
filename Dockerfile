@@ -1,11 +1,18 @@
-FROM python:3.8
+FROM alpine3.5
 
-ENV SCR_DIR /usr/bin/src/webapp/src
+RUN apk add --update py2-pip
 
-COPY src/* ${SRC_DIR}/
 
+COPY requirements.txt /usr/src/containerize-python-server/
+RUN pip install --no-cache-dir -r /user/src/containerize-python-server/requirements.txt
+
+
+COPY simple_server.py /usr/arc/containerize-python-server/
+COPY template/index.html /usr/src/containerize-python-server/template/
+
+EXPOSE 5000
 WORKDIR ${SCR_DIR}
 
 ENV PYTHONUNBUFFERED=1
 
-CMD ["python", "siple_server.py"]
+CMD ["python", "usr/src/containerize-python-server/siple_server.py"]

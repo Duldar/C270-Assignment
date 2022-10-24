@@ -1,11 +1,19 @@
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+import random
+from flask import Flask, render_template
 
-def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
-    """Entrypoint for python server"""
-    server_address = ("0.0.0.0", 8000)
-    httpd = server_class(server_address, handler_class)
-    print("launching server...")
-    httpd.serve_forever()
+app = Flask(__name__)
 
+images = [
+    "http://ak-hdl.buzzfed.com/static2013-10/enhanced/webdr05/15/9/anigif_enhanced-buzz-26388-1381844103-11.gif"
+    "http://ak-hdl.buzzfed.com/static2013-10/enhanced/webdr01/15/9/anigif_enhanced-buzz-31540-1381844535-8.gif"
+    "http://ak-hdl.buzzfed.com/static2013-10/enhanced/webdr05/15/9/anigif_enhanced-buzz-26390-1381844163-18.gif"
+
+
+
+]
+@app.route('/')
+def index():
+    url = random.choice(images)
+    return render_template('index.html', url=url)
 if __name__ == "__main__":
-    run()
+    app.run(host="0.0.0.0")
